@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export function Logo() {
   return (
-    <div className="relative h-8 max-w-[10.847rem]">
-      <Image
+    <div className="relative h-18  mx-auto">
+      {/* <Image
         src={logo}
         fill
         className="dark:hidden"
@@ -21,7 +21,8 @@ export function Logo() {
         alt="NextAdmin logo"
         role="presentation"
         quality={100}
-      />
+      /> */}
+      <h1 className="text-center text-3xl font-bold text-purple-700">EV-Charging</h1>
     </div>
   );
 }
