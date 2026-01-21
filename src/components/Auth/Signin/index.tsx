@@ -1,6 +1,7 @@
 import Link from "next/link";
 import GoogleSigninButton from "../GoogleSigninButton";
 import SigninWithPassword from "../SigninWithPassword";
+import { signIn } from "next-auth/react";
 
 export default function Signin() {
   return (

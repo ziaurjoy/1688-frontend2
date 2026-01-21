@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+
 export const metadata: Metadata = {
   title: "Sign in",
 };
@@ -27,7 +28,7 @@ export default function SignIn() {
               >
                 Back To home
               </Link>
-              <h1 className="mt-12 mb-4 text-2xl font-bold text-dark dark:text-white sm:text-heading-3">
+              <h1 className="mb-4 mt-12 text-2xl font-bold text-dark dark:text-white sm:text-heading-3">
                 Welcome Back!
               </h1>
 
