@@ -3,12 +3,12 @@
 import { EmailIcon, PasswordIcon } from "@/assets/icons";
 import Link from "next/link";
 import React, { useState } from "react";
-import InputGroup from "../FormElements/InputGroup";
-import { Checkbox } from "../FormElements/checkbox";
+import InputGroup from "../../FormElements/InputGroup";
+import { Checkbox } from "../../FormElements/checkbox";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function SigninWithPassword() {
+export default function SignUpForm() {
   const router = useRouter();
 
   const [data, setData] = useState({
@@ -75,25 +75,6 @@ export default function SigninWithPassword() {
         icon={<PasswordIcon />}
         required
       />
-
-      <div className="mb-6 flex items-center justify-between gap-2 py-2 font-medium">
-        <Checkbox
-          label="Remember me"
-          name="remember"
-          withIcon="check"
-          minimal
-          radius="md"
-          // checked={data.remember}
-          onChange={handleChange}
-        />
-
-        <Link
-          href="/auth/forgot-password"
-          className="hover:text-primary dark:text-white dark:hover:text-primary"
-        >
-          Forgot Password?
-        </Link>
-      </div>
 
       {error && <p className="mb-3 text-sm text-red-500">{error}</p>}
 

@@ -1,5 +1,4 @@
-import Signin from "@/components/Auth/Signin";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import SignUpPage from "@/components/Auth/Signup/SignUpPage";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +15,7 @@ export default function SignIn() {
         <div className="container mx-auto flex flex-wrap items-center">
           <div className="w-full xl:w-1/2">
             <div className="w-full p-4 sm:p-12.5 xl:p-15">
-              <Signin />
+              <SignUpPage />
             </div>
           </div>
 
@@ -33,7 +32,7 @@ export default function SignIn() {
               </h1>
 
               <p className="mb-3 text-xl font-medium text-dark dark:text-white">
-                Sign in to your account
+                Sign Up to your account
               </p>
 
               <p className="w-full max-w-[375px] font-medium text-dark-4 dark:text-dark-6">
