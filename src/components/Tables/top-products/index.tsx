@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Table,
   TableBody,
@@ -7,16 +9,31 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
-import { getTopProducts } from "../fetch";
+import { getProductData } from "@/services/product.services";
+import { useState } from "react";
+
+interface QueryFilterState {
+  page: number;
+  page_size: number;
+  total?: number; // optional
+  search?: string;
+}
 
 export async function TopProducts() {
-  const data = await getTopProducts();
+  const [queryFilter, setQueryFilter] = useState<QueryFilterState>({
+    page: 1,
+    page_size: 10,
+  });
+
+  const data = await getProductData(queryFilter);
+
+  // const data = [];
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5">
         <h2 className="text-2xl font-bold text-dark dark:text-white">
-          Top Products
+          Products
         </h2>
       </div>
 
@@ -36,7 +53,7 @@ export async function TopProducts() {
         </TableHeader>
 
         <TableBody>
-          {data.map((product) => (
+          {data.map((product: any) => (
             <TableRow
               className="text-base font-medium text-dark dark:text-white"
               key={product.name + product.profit}

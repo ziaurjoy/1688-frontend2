@@ -31,25 +31,24 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials) return null;
+        const formData = new FormData();
+        formData.append("username", credentials.email);
+        formData.append("password", credentials.password);
 
-        const res = await fetch(`${process.env.BACKEND_API_URL}/auth/login`, {
+        const res = await fetch(`${process.env.BACKEND_API_URL}/users/token`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: credentials.email,
-            password: credentials.password,
-          }),
+          body: formData, // no JSON.stringify
         });
 
         if (!res.ok) return null;
 
         const user = await res.json();
-
+        console.log("===user", user.access_token);
         // user must contain id
         return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
+          // id: user.id,
+          // name: user.name,
+          // email: user.email,
           accessToken: user.access_token, // backend JWT
         };
       },
@@ -98,7 +97,7 @@ const handler = NextAuth({
   },
 
   pages: {
-    signIn: "/login",
+    signIn: "/sign-in",
   },
 });
 

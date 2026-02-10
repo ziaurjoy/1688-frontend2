@@ -11,7 +11,7 @@ export default function GoogleSigninButton({ text }: { text: string }) {
     setLoading(true);
 
     await signIn("google", {
-      callbackUrl: "/dashboard",
+      callbackUrl: "/admin-dashboard",
     });
   };
 
