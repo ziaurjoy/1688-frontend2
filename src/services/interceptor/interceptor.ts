@@ -15,9 +15,14 @@ const authApi = axios.create({
 authApi.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     const session = await getSession();
-    console.log("==========session.accessToken", session);
+    console.log("===========", session);
     if (session?.accessToken) {
       config.headers.Authorization = `Bearer ${session.accessToken}`;
+    }
+
+    if (session?.api_credential) {
+      config.headers["app-key"] = session?.api_credential.app_key;
+      config.headers["secret-key"] = session?.api_credential.secret_key_hash;
     }
 
     return config;
@@ -31,16 +36,16 @@ authApi.interceptors.request.use(
  * Response Interceptor
  * - Handle 401 globally
  */
-authApi.interceptors.response.use(
-  (response) => response,
-  async (error: AxiosError) => {
-    if (error.response?.status === 401) {
-      // Token expired or invalid
-      await signOut({ redirect: true, callbackUrl: "/sign-in" });
-    }
+// authApi.interceptors.response.use(
+//   (response) => response,
+//   async (error: AxiosError) => {
+//     if (error.response?.status === 401) {
+//       // Token expired or invalid
+//       await signOut({ redirect: true, callbackUrl: "/sign-in" });
+//     }
 
-    return Promise.reject(error);
-  },
-);
+//     return Promise.reject(error);
+//   },
+// );
 
 export default authApi;

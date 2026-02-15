@@ -10,3 +10,11 @@ export async function getAccessData() {
       return response?.data;
     });
 }
+
+export async function getAPIKey() {
+  return await authApi
+    .get(apiUrl + apiEndpoint.user.secret)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
