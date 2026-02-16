@@ -13,6 +13,14 @@ export async function getAccessData() {
 
 export async function getAPIKey() {
   return await authApi
+    .get(apiUrl + apiEndpoint.user.get_secret)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
+
+export async function generateAppKey() {
+  return await authApi
     .get(apiUrl + apiEndpoint.user.secret)
     .then((response: any) => {
       return response?.data;

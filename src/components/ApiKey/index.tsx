@@ -11,7 +11,9 @@ import {
 import Image from "next/image";
 import { getProductData } from "@/services/product.services";
 import { useEffect, useState } from "react";
-import { getAPIKey } from "@/services/user.services";
+import { generateAppKey, getAPIKey } from "@/services/user.services";
+import { Button } from "../ui-elements/button";
+import { MessageOutlineIcon } from "@/assets/icons";
 
 export function ApiKeyComponent() {
   const [data, setData] = useState<any[]>([]);
@@ -33,12 +35,33 @@ export function ApiKeyComponent() {
     fetchProducts();
   }, []); // re-fetch only when filter changes
 
-  console.log("data", data);
+  const reGenerateAppKey = async () => {
+    try {
+      setLoading(true);
+      const response = await generateAppKey();
+      setData(response || []);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5">
-        <h2 className="text-2xl font-bold text-dark dark:text-white"></h2>
+        <h2 className="text-2xl font-bold text-dark dark:text-white">
+          <Button
+            label="Re Generate"
+            variant="green"
+            size="small"
+            // icon={<MessageOutlineIcon />}
+            onClick={(e) => {
+              e.stopPropagation();
+              reGenerateAppKey();
+            }}
+          />
+        </h2>
       </div>
 
       <Table>

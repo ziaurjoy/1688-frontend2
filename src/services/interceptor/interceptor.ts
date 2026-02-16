@@ -15,7 +15,6 @@ const authApi = axios.create({
 authApi.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     const session = await getSession();
-    console.log("===========", session);
     if (session?.accessToken) {
       config.headers.Authorization = `Bearer ${session.accessToken}`;
     }

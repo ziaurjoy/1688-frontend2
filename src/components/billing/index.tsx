@@ -19,7 +19,7 @@ interface QueryFilterState {
   search?: string;
 }
 
-export function TopProducts() {
+export function BillingComponent() {
   const [queryFilter, setQueryFilter] = useState<QueryFilterState>({
     page: 1,
     page_size: 10,
