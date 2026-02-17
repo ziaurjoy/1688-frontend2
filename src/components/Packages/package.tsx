@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "../ui-elements/button";
 import { MessageOutlineIcon } from "@/assets/icons";
 import { getPackages, getUserPackage } from "@/services/subscription.service";
+import CheckoutButton from "./checkoutButton";
 
 /* ============================= */
 /* Interfaces */
@@ -20,6 +21,7 @@ interface Package {
   enabled_trial: boolean;
   validity_days: number;
   trial_days: number;
+  stripe_id: string;
   is_active: boolean;
   visibility: "PUBLIC" | "PRIVATE";
   created_at: string;
@@ -89,8 +91,23 @@ export function PackagesComponent() {
     setSelectedPackageId(id);
   };
 
+  const handleCheckout = async (stripe_id: string) => {
+    console.log("Initiating checkout for stripe_id:", stripe_id);
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      body: JSON.stringify({
+        priceId: stripe_id,
+      }),
+      headers: { "Content-Type": "application/json" },
+    });
+    console.log("Checkout API response:", res);
+    const { url } = await res.json();
+    if (url) window.location.href = url; // Redirect to Stripe
+  };
+
   const handlePayment = (item: PackageResponse) => {
-    const packageId = item.package._id;
+    const stripe_id = item.package.stripe_id;
+    handleCheckout(stripe_id);
     // 👉 Redirect to checkout page
     // router.push(`/checkout?package_id=${packageId}`);
 

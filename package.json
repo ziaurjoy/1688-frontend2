@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^8.7.0",
     "apexcharts": "^4.5.0",
     "axios": "^1.13.5",
     "class-variance-authority": "^0.7.1",
@@ -24,6 +25,7 @@
     "react": "^19.2.0",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^19.2.0",
+    "stripe": "^20.3.1",
     "tailwind-merge": "^2.6.0",
     "universal-cookie": "^8.0.1"
   },
