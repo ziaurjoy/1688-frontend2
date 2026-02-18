@@ -91,27 +91,32 @@ export function PackagesComponent() {
     setSelectedPackageId(id);
   };
 
-  const handleCheckout = async (stripe_id: string) => {
-    console.log("Initiating checkout for stripe_id:", stripe_id);
-    const res = await fetch("/api/checkout", {
-      method: "POST",
-      body: JSON.stringify({
-        priceId: stripe_id,
-      }),
-      headers: { "Content-Type": "application/json" },
-    });
-    console.log("Checkout API response:", res);
-    const { url } = await res.json();
-    if (url) window.location.href = url; // Redirect to Stripe
+  const handleCheckout = async (pkg: any) => {
+    // Changed param name from 'package'
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify({
+          package: pkg, // The key in the JSON is "package", which matches your API destructuring
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await res.json();
+
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Checkout error:", data.error);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   };
 
   const handlePayment = (item: PackageResponse) => {
-    const stripe_id = item.package.stripe_id;
-    handleCheckout(stripe_id);
-    // 👉 Redirect to checkout page
-    // router.push(`/checkout?package_id=${packageId}`);
-
-    // OR call backend payment API here
+    // Pass the actual package object
+    handleCheckout(item.package);
   };
 
   if (loading) {

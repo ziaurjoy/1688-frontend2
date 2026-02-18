@@ -33,9 +33,15 @@ export const NAV_DATA = [
         items: [],
       },
       {
-        title: "Billing",
-        url: "/billing",
+        title: "Invoices",
+        url: "/invoices",
         icon: Icons.BillingIcon,
+        items: [],
+      },
+      {
+        title: "Transactions",
+        url: "/transactions",
+        icon: Icons.TransactionIcon,
         items: [],
       },
       // {

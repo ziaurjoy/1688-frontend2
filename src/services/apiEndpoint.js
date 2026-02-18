@@ -9,6 +9,9 @@ export const apiEndpoint = {
   subscription: {
     package: "/subscription/packages/",
     user_features: "/subscription/user/features/",
+    stripe_payment: "/payment/stripe/create/",
+    read_invoice: "/invoice/subscription/read/",
+    read_transaction: "/payment/transaction/read/",
   },
   product: {
     query: "/products",
