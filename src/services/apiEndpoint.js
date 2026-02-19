@@ -3,6 +3,7 @@ export const apiEndpoint = {
     login: "/users/token",
     me: "/users/me",
     secret: "/users/secret/",
+    api_uses: "/users/api-uses/",
     get_secret: "/users/get-secret/",
     package: "/users/packages/",
   },

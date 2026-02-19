@@ -26,3 +26,11 @@ export async function generateAppKey() {
       return response?.data;
     });
 }
+
+export async function queryAPIUses() {
+  return await authApi
+    .get(apiUrl + apiEndpoint.user.api_uses)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
