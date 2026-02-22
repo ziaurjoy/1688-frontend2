@@ -10,7 +10,10 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { getInvoiceData } from "@/services/subscription.service";
+import {
+  downloadInvoice,
+  getInvoiceData,
+} from "@/services/subscription.service";
 import { formatHumanReadableDate } from "@/lib/humanReadableDate";
 
 interface QueryFilterState {
@@ -45,6 +48,28 @@ export function BillingComponent() {
     fetchInvoices();
   }, [queryFilter]); // re-fetch only when filter changes
 
+  const downloadInvoices = async (id: string) => {
+    console.log("Downloading invoice with ID:", id);
+    try {
+      setLoading(true);
+      const response = await downloadInvoice(id);
+      // Handle the downloaded file (e.g., trigger download in browser)
+      if (response && response instanceof Blob) {
+        const url = window.URL.createObjectURL(response);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `invoice-${id}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      console.error("Failed to download invoice:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
       <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5">
@@ -66,6 +91,7 @@ export function BillingComponent() {
             <TableHead>Discount</TableHead>
             <TableHead>Total</TableHead>
             <TableHead>Created At</TableHead>
+            <TableHead>Actions</TableHead>
             {/* <TableHead className="pr-5 text-right sm:pr-6 xl:pr-7.5">
               Profit
             </TableHead> */}
@@ -81,7 +107,7 @@ export function BillingComponent() {
             data?.map((invoices: any) => (
               <TableRow
                 className="text-base font-medium text-dark dark:text-white"
-                key={invoices?._id}
+                key={invoices?.id}
               >
                 <TableCell>{invoices?.invoice_number}</TableCell>
                 <TableCell>{invoices?.package?.title}</TableCell>
@@ -91,6 +117,14 @@ export function BillingComponent() {
                 <TableCell>{invoices?.total}</TableCell>
                 <TableCell>
                   {formatHumanReadableDate(invoices?.created_at)}
+                </TableCell>
+                <TableCell>
+                  <button
+                    onClick={() => downloadInvoices(invoices?.id)}
+                    className="mt-8 rounded-lg bg-black px-8 py-3 font-semibold text-white transition hover:bg-gray-800"
+                  >
+                    Download
+                  </button>
                 </TableCell>
               </TableRow>
             ))

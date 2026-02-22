@@ -41,10 +41,11 @@ export async function middleware(request: NextRequest) {
   // User is trying to access auth routes
   if (isAuthRoute) {
     if (token) {
+      console.log("=========token=======", token);
       // User is already authenticated, redirect to dashboard
       return NextResponse.redirect(new URL("/admin-dashboard", request.url));
     }
-
+    console.log("=========isAuthRoute", isAuthRoute);
     // User is not authenticated, allow access to auth pages
     return NextResponse.next();
   }

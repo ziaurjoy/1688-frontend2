@@ -41,6 +41,16 @@ export async function getInvoiceData(query: object) {
     });
 }
 
+export async function downloadInvoice(id: string) {
+  return await authApi
+    .get(apiUrl + apiEndpoint.subscription.download_invoice + `${id}`, {
+      responseType: "blob", // Important for file downloads
+    })
+    .then((response: any) => {
+      return response?.data;
+    });
+}
+
 export async function getTransactionData(query: object) {
   return await authApi
     .get(
