@@ -9,6 +9,11 @@ import { ChatsCard } from "../../(home)/_components/chats-card";
 import { OverviewCardsGroup } from "../../(home)/_components/overview-cards";
 import { OverviewCardsSkeleton } from "../../(home)/_components/overview-cards/skeleton";
 import { RegionLabels } from "../../(home)/_components/region-labels";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 type PropsType = {
   searchParams: Promise<{

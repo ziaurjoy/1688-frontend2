@@ -8,12 +8,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: {
-    template: "Admin Dashboard",
-  },
-};
-
 export default async function AdminRootLayout({ children }: PropsWithChildren) {
   // Server-side authentication check
   const session = await getServerSession(authOptions);
