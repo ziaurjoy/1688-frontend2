@@ -1,9 +1,9 @@
 import * as qs from "qs";
-
 import { apiEndpoint } from "./apiEndpoint";
 import authApi from "./interceptor/interceptor";
 
-const apiUrl = "http://localhost:8000";
+const apiUrl =
+  process.env.NEXT_PUBLIC_BACKEND_API_URL || "http://localhost:8000";
 
 export async function getPackages() {
   return await authApi

@@ -56,20 +56,14 @@ export function TransactionComponent() {
       <Table>
         <TableHeader>
           <TableRow className="border-t text-base [&>th]:h-auto [&>th]:py-3 sm:[&>th]:py-4.5">
-            {/* <TableHead className="min-w-[120px] !text-left">Phone</TableHead> */}
-            {/* <TableHead className="min-w-[120px] pl-5 sm:pl-6 xl:pl-7.5">
-              Transction ID
-            </TableHead> */}
             <TableHead>Package</TableHead>
             <TableHead>Amount</TableHead>
 
             <TableHead>Currency</TableHead>
             <TableHead>Payment Method</TableHead>
+
             <TableHead>Status</TableHead>
             <TableHead>Created At</TableHead>
-            {/* <TableHead className="pr-5 text-right sm:pr-6 xl:pr-7.5">
-              Profit
-            </TableHead> */}
           </TableRow>
         </TableHeader>
 
@@ -84,13 +78,12 @@ export function TransactionComponent() {
                 className="text-base font-medium text-dark dark:text-white"
                 key={invoices?._id}
               >
-                {/* <TableCell>{invoices?.transaction_id}</TableCell> */}
                 <TableCell>{invoices?.package?.title}</TableCell>
                 <TableCell>{invoices?.amount}</TableCell>
                 <TableCell>{invoices?.currency}</TableCell>
                 <TableCell>{invoices?.payment_method}</TableCell>
                 <TableCell>{invoices?.status?.toUpperCase()}</TableCell>
-                <TableCell>{invoices?.total}</TableCell>
+
                 <TableCell>
                   {formatHumanReadableDate(invoices?.created_at)}
                 </TableCell>

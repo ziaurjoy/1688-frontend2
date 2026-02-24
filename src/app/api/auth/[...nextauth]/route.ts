@@ -74,6 +74,7 @@ export const authOptions: NextAuthOptions = {
         const data = await res.json();
 
         return {
+          id: data.user?.id || data.user?.email || "1",
           accessToken: data.access_token,
           token_type: data.token_type,
           user: data.user,

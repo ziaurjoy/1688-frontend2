@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Image from "next/image";
-import { getProductData } from "@/services/product.services";
+import { getProductData } from "@/services/product.service";
 import { useEffect, useState } from "react";
 
 interface QueryFilterState {

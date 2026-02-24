@@ -3,7 +3,7 @@ import { compactFormat } from "@/lib/format-number";
 import { OverviewCard } from "./card";
 import * as icons from "./icons";
 import { useEffect, useState } from "react";
-import { queryAPIUses } from "@/services/user.services";
+import { queryAPIUses } from "@/services/user.service";
 
 // REMOVED 'async' here
 export function OverviewCardsGroup() {
@@ -33,10 +33,11 @@ export function OverviewCardsGroup() {
     <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4 2xl:gap-7.5">
       {data.map((item, index) => (
         <OverviewCard
-          key={item.id || index} // Added a key prop (essential for lists)
+          key={item.id || index}
           label={item.endpoint}
           data={{
             value: compactFormat(item.total_hits),
+            growthRate: item.growthRate || 0,
           }}
           Icon={icons.Views}
         />
