@@ -153,8 +153,8 @@ export function TransactionComponent() {
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex items-center justify-between border-t px-6 py-4">
-        <div className="text-sm text-gray-500">
+      <div className="flex items-center justify-end border-t px-2 py-4 md:justify-between md:px-6">
+        <div className="hidden text-sm text-gray-500 md:block">
           Page {queryFilter.page} of {totalPages || 1}
         </div>
 

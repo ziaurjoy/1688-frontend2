@@ -185,8 +185,8 @@ export function BillingComponent() {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between border-t px-6 py-4">
-        <div className="text-sm text-gray-500">
+      <div className="flex items-center md:justify-between justify-end border-t px-2 md:px-6 py-4">
+        <div className="text-sm text-gray-500 hidden md:block">
           Page {queryFilter.page} of {totalPages || 1}
         </div>
 
