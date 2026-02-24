@@ -22,7 +22,7 @@ export function Logo() {
         role="presentation"
         quality={100}
       /> */}
-      <h1 className="text-center text-3xl font-bold text-primary">EV-Charging</h1>
+      <h1 className="text-center text-3xl font-bold text-primary">Brand LoGo</h1>
     </div>
   );
 }
