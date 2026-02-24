@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export function Logo() {
   return (
-    <div className="relative h-18  mx-auto">
+    <div className="relative h-16  mx-auto">
       {/* <Image
         src={logo}
         fill
@@ -22,7 +22,7 @@ export function Logo() {
         role="presentation"
         quality={100}
       /> */}
-      <h1 className="text-center text-3xl font-bold text-purple-700">EV-Charging</h1>
+      <h1 className="text-center text-3xl font-bold text-primary">EV-Charging</h1>
     </div>
   );
 }
