@@ -8,13 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   downloadInvoice,
   getInvoiceData,
 } from "@/services/subscription.service";
 import { formatHumanReadableDate } from "@/lib/humanReadableDate";
+import { Download, Loader2 } from "lucide-react";
+import { Pagination } from "../ui/Pagination";
 
 interface QueryFilterState {
   page: number;
@@ -31,6 +32,10 @@ export function BillingComponent() {
 
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
+  const [total, setTotal] = useState(0);
+
+  const totalPages = Math.ceil(total / queryFilter.page_size);
 
   useEffect(() => {
     const fetchInvoices = async () => {
@@ -38,6 +43,7 @@ export function BillingComponent() {
         setLoading(true);
         const response = await getInvoiceData(queryFilter);
         setData(response?.results || []);
+        setTotal(response?.count || 0);
       } catch (error) {
         console.error("Failed to fetch invoices:", error);
       } finally {
@@ -46,14 +52,18 @@ export function BillingComponent() {
     };
 
     fetchInvoices();
-  }, [queryFilter]); // re-fetch only when filter changes
+  }, [queryFilter]);
+
+  const handlePageChange = (page: number) => {
+    if (page < 1 || page > totalPages) return;
+    setQueryFilter((prev) => ({ ...prev, page }));
+  };
 
   const downloadInvoices = async (id: string) => {
-    console.log("Downloading invoice with ID:", id);
     try {
-      setLoading(true);
+      setDownloadingId(id);
       const response = await downloadInvoice(id);
-      // Handle the downloaded file (e.g., trigger download in browser)
+
       if (response && response instanceof Blob) {
         const url = window.URL.createObjectURL(response);
         const a = document.createElement("a");
@@ -66,71 +76,126 @@ export function BillingComponent() {
     } catch (error) {
       console.error("Failed to download invoice:", error);
     } finally {
-      setLoading(false);
+      setDownloadingId(null);
     }
   };
 
   return (
-    <div className="rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
-      <div className="px-6 py-4 sm:px-7 sm:py-5 xl:px-8.5">
-        <h2 className="text-2xl font-bold text-dark dark:text-white">
-          Invoices
+    <div className="rounded-2xl bg-white shadow dark:bg-gray-900">
+      {/* Header */}
+      <div className="flex items-center justify-between border-b px-6 py-5">
+        <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+          Billing & Invoices
         </h2>
       </div>
 
-      <Table>
-        <TableHeader>
-          <TableRow className="border-t text-base [&>th]:h-auto [&>th]:py-3 sm:[&>th]:py-4.5">
-            {/* <TableHead className="min-w-[120px] !text-left">Phone</TableHead> */}
-            <TableHead className="min-w-[120px] pl-5 sm:pl-6 xl:pl-7.5">
-              Invoice Number
-            </TableHead>
-            <TableHead>Package</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Discount</TableHead>
-            <TableHead>Total</TableHead>
-            <TableHead>Created At</TableHead>
-            <TableHead>Actions</TableHead>
-            {/* <TableHead className="pr-5 text-right sm:pr-6 xl:pr-7.5">
-              Profit
-            </TableHead> */}
-          </TableRow>
-        </TableHeader>
-
-        <TableBody>
-          {loading ? (
-            <TableRow>
-              <TableCell colSpan={5}>Loading...</TableCell>
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-gray-50 dark:bg-gray-800">
+              <TableHead className="pl-6">Invoice</TableHead>
+              <TableHead>Package</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Price</TableHead>
+              <TableHead>Discount</TableHead>
+              <TableHead>Total</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead className="pr-6 text-right">Action</TableHead>
             </TableRow>
-          ) : (
-            data?.map((invoices: any) => (
-              <TableRow
-                className="text-base font-medium text-dark dark:text-white"
-                key={invoices?.id}
-              >
-                <TableCell>{invoices?.invoice_number}</TableCell>
-                <TableCell>{invoices?.package?.title}</TableCell>
-                <TableCell>{invoices?.status?.toUpperCase()}</TableCell>
-                <TableCell>{invoices?.price}</TableCell>
-                <TableCell>{invoices?.discount}</TableCell>
-                <TableCell>{invoices?.total}</TableCell>
-                <TableCell>
-                  {formatHumanReadableDate(invoices?.created_at)}
-                </TableCell>
-                <TableCell>
-                  <button
-                    onClick={() => downloadInvoices(invoices?.id)}
-                    className="mt-8 rounded-lg bg-black px-8 py-3 font-semibold text-white transition hover:bg-gray-800"
-                  >
-                    Download
-                  </button>
+          </TableHeader>
+
+          <TableBody>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={8} className="py-10 text-center">
+                  <div className="flex items-center justify-center gap-2 text-gray-500">
+                    <Loader2 className="animate-spin" size={18} />
+                    Loading invoices...
+                  </div>
                 </TableCell>
               </TableRow>
-            ))
-          )}
-        </TableBody>
-      </Table>
+            ) : data.length === 0 ? (
+              <TableRow>
+                <TableCell
+                  colSpan={8}
+                  className="py-10 text-center text-gray-500"
+                >
+                  No invoices found
+                </TableCell>
+              </TableRow>
+            ) : (
+              data.map((invoice: any) => (
+                <TableRow
+                  key={invoice?.id}
+                  className="transition hover:bg-gray-50 dark:hover:bg-gray-800"
+                >
+                  <TableCell className="pl-6 font-medium">
+                    #{invoice?.invoice_number}
+                  </TableCell>
+                  <TableCell>
+                    <div className="font-medium text-gray-700 dark:text-gray-200">
+                      {invoice?.package?.title}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <span
+                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+                        invoice?.status === "paid"
+                          ? "bg-green-100 text-green-600"
+                          : invoice?.status === "pending"
+                            ? "bg-yellow-100 text-yellow-600"
+                            : "bg-red-100 text-red-600"
+                      }`}
+                    >
+                      {invoice?.status?.toUpperCase()}
+                    </span>
+                  </TableCell>
+                  <TableCell>${invoice?.price}</TableCell>
+                  <TableCell className="text-red-500">
+                    -${invoice?.discount}
+                  </TableCell>
+                  <TableCell className="font-semibold text-gray-900 dark:text-white">
+                    ${invoice?.total}
+                  </TableCell>
+                  <TableCell className="text-gray-500">
+                    {formatHumanReadableDate(invoice?.created_at)}
+                  </TableCell>
+                  <TableCell className="pr-6 text-right">
+                    <button
+                      onClick={() => downloadInvoices(invoice?.id)}
+                      className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/80 disabled:opacity-50"
+                      disabled={downloadingId === invoice?.id}
+                    >
+                      {downloadingId === invoice?.id ? (
+                        <Loader2 className="animate-spin" size={16} />
+                      ) : (
+                        <Download size={16} />
+                      )}
+                      {downloadingId === invoice?.id
+                        ? "Downloading"
+                        : "Download"}
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
+
+      {/* Pagination */}
+      <div className="flex items-center md:justify-between justify-end border-t px-2 md:px-6 py-4">
+        <div className="text-sm text-gray-500 hidden md:block">
+          Page {queryFilter.page} of {totalPages || 1}
+        </div>
+
+        <Pagination
+          current={queryFilter.page}
+          total={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
     </div>
   );
 }
