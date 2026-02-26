@@ -35,3 +35,27 @@ export async function queryAPIUses() {
       return response?.data;
     });
 }
+
+export async function editUserProfile(data: object) {
+  return await authApi
+    .patch(apiUrl + apiEndpoint.user.edit_profile, data)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
+
+export async function editProfilePicture(data: object) {
+  return await authApi
+    .patch(apiUrl + apiEndpoint.user.edit_profile_picture, data)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
+
+export async function getUsesData() {
+  return await authApi
+    .get(apiUrl + apiEndpoint.user.me)
+    .then((response: any) => {
+      return response?.data;
+    });
+}

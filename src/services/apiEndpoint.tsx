@@ -2,10 +2,12 @@ export const apiEndpoint = {
   user: {
     login: "/users/token",
     me: "/users/me",
-    secret: "/users/secret/",
+    secret: "/users/secret/generate/",
     api_uses: "/users/api-uses/",
     get_secret: "/users/get-secret/",
     package: "/users/packages/",
+    edit_profile: "/users/profile/edit/",
+    edit_profile_picture: "/users/profile/picture/edit/",
   },
   subscription: {
     package: "/subscription/packages/",
