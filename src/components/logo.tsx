@@ -1,11 +1,13 @@
-import darkLogo from "@/assets/logos/dark.svg";
-import logo from "@/assets/logos/main.svg";
+// import darkLogo from "@/assets/logos/dark.svg";
+import darkLogo from "@/assets/logos/main_logo.png";
+import logo from "@/assets/logos/main_logo.png";
+// import logo from "@/assets/logos/main.svg";
 import Image from "next/image";
 
 export function Logo() {
   return (
-    <div className="relative h-16  mx-auto">
-      {/* <Image
+    <div className="relative mx-auto h-16">
+      <Image
         src={logo}
         fill
         className="dark:hidden"
@@ -21,8 +23,8 @@ export function Logo() {
         alt="NextAdmin logo"
         role="presentation"
         quality={100}
-      /> */}
-      <h1 className="text-center text-3xl font-bold text-primary">Brand LoGo</h1>
+      />
+      {/* <h1 className="text-center text-3xl font-bold text-primary">Brand LoGo</h1> */}
     </div>
   );
 }
