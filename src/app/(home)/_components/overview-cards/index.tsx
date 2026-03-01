@@ -4,6 +4,7 @@ import { OverviewCard } from "./card";
 import * as icons from "./icons";
 import { useEffect, useState } from "react";
 import { queryAPIUses } from "@/services/user.service";
+import { Workflow } from "lucide-react";
 
 // REMOVED 'async' here
 export function OverviewCardsGroup() {
@@ -24,7 +25,6 @@ export function OverviewCardsGroup() {
 
   useEffect(() => {
     fetchAPIuses();
-    // The empty dependency array [] ensures this only runs ONCE on mount.
   }, []);
 
   if (loading && data.length === 0) return <div>Loading...</div>;
@@ -39,7 +39,7 @@ export function OverviewCardsGroup() {
             value: compactFormat(item.total_hits),
             growthRate: item.growthRate || 0,
           }}
-          Icon={icons.Views}
+          Icon={Workflow}
         />
       ))}
     </div>

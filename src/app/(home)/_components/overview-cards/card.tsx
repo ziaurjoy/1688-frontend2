@@ -1,5 +1,3 @@
-import { ArrowDownIcon, ArrowUpIcon } from "@/assets/icons";
-import { cn } from "@/lib/utils";
 import type { JSX, SVGProps } from "react";
 
 type PropsType = {
@@ -8,12 +6,11 @@ type PropsType = {
     value: number | string;
     growthRate: number;
   };
-  Icon: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+  Icon: React.ComponentType<SVGProps<SVGSVGElement>>;
 };
 
 export function OverviewCard({ label, data, Icon }: PropsType) {
-  // const isDecreasing = data.growthRate < 0;
-  console.log("Data in OverviewCard:", data); // Debugging log
+  console.log("Data in OverviewCard:", data);
   return (
     <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark">
       <Icon />
