@@ -11,8 +11,9 @@ import {
 import { useEffect, useState } from "react";
 import { getTransactionData } from "@/services/subscription.service";
 import { formatHumanReadableDate } from "@/lib/humanReadableDate";
-import { Loader2, CreditCard } from "lucide-react";
+import { Loader2, CreditCard, Eye } from "lucide-react";
 import { Pagination } from "../ui/Pagination";
+import { useRouter } from "next/navigation";
 
 interface QueryFilterState {
   page: number;
@@ -26,7 +27,7 @@ export function TransactionComponent() {
     page: 1,
     page_size: 10,
   });
-
+  const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
@@ -144,6 +145,14 @@ export function TransactionComponent() {
                   {/* Date */}
                   <TableCell className="text-gray-500">
                     {formatHumanReadableDate(tx?.created_at)}
+                  </TableCell>
+                  <TableCell className="flex items-center justify-end gap-2 pr-6 text-right">
+                    <button
+                      onClick={() => router.push(`/transactions/${tx?._id}`)}
+                      className="inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3 py-2 text-sm font-medium text-primary transition hover:bg-primary/80 hover:text-white disabled:opacity-50"
+                    >
+                      <Eye size={16} />
+                    </button>
                   </TableCell>
                 </TableRow>
               ))

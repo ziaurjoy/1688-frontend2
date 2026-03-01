@@ -17,6 +17,7 @@ export const apiEndpoint = {
     invoiceById: "/invoice/subscription/read/",
     download_invoice: "/invoice/generate-invoice-pdf/",
     read_transaction: "/payment/transaction/read/",
+    transactionById: "/payment/transaction/read/",
   },
   product: {
     query: "/products",

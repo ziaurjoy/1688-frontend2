@@ -70,3 +70,10 @@ export async function getTransactionData(query: object) {
       return response?.data;
     });
 }
+export async function getTransactionById(id: string) {
+  return await authApi
+    .get(apiUrl + apiEndpoint.subscription.transactionById + `${id}`)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
