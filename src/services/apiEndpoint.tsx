@@ -14,6 +14,7 @@ export const apiEndpoint = {
     user_features: "/subscription/user/features/",
     stripe_payment: "/payment/stripe/create/",
     read_invoice: "/invoice/subscription/read/",
+    invoiceById: "/invoice/subscription/read/",
     download_invoice: "/invoice/generate-invoice-pdf/",
     read_transaction: "/payment/transaction/read/",
   },

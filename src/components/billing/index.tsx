@@ -14,8 +14,9 @@ import {
   getInvoiceData,
 } from "@/services/subscription.service";
 import { formatHumanReadableDate } from "@/lib/humanReadableDate";
-import { Download, Loader2 } from "lucide-react";
+import { Download, Eye, Loader2, View } from "lucide-react";
 import { Pagination } from "../ui/Pagination";
+import { useRouter } from "next/navigation";
 
 interface QueryFilterState {
   page: number;
@@ -29,7 +30,7 @@ export function BillingComponent() {
     page: 1,
     page_size: 10,
   });
-
+  const router = useRouter();
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
@@ -161,10 +162,17 @@ export function BillingComponent() {
                   <TableCell className="text-gray-500">
                     {formatHumanReadableDate(invoice?.created_at)}
                   </TableCell>
-                  <TableCell className="pr-6 text-right">
+                  <TableCell className="flex items-center justify-end gap-2 pr-6 text-right">
+                    <button
+                      onClick={() => router.push(`/invoices/${invoice?.id}`)}
+                      className="inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3 py-2 text-sm font-medium text-primary transition hover:bg-primary/80 hover:text-white disabled:opacity-50"
+                      disabled={downloadingId === invoice?.id}
+                    >
+                      <Eye size={16} />
+                    </button>
                     <button
                       onClick={() => downloadInvoices(invoice?.id)}
-                      className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary/80 disabled:opacity-50"
+                      className="inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3 py-2 text-sm font-medium text-primary transition hover:bg-primary/80 hover:text-white disabled:opacity-50"
                       disabled={downloadingId === invoice?.id}
                     >
                       {downloadingId === invoice?.id ? (
@@ -172,9 +180,6 @@ export function BillingComponent() {
                       ) : (
                         <Download size={16} />
                       )}
-                      {downloadingId === invoice?.id
-                        ? "Downloading"
-                        : "Download"}
                     </button>
                   </TableCell>
                 </TableRow>
@@ -185,8 +190,8 @@ export function BillingComponent() {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center md:justify-between justify-end border-t px-2 md:px-6 py-4">
-        <div className="text-sm text-gray-500 hidden md:block">
+      <div className="flex items-center justify-end border-t px-2 py-4 md:justify-between md:px-6">
+        <div className="hidden text-sm text-gray-500 md:block">
           Page {queryFilter.page} of {totalPages || 1}
         </div>
 
