@@ -17,7 +17,7 @@ export default function TransactionsDetails() {
     const fetchTransaction = async () => {
       try {
         const res = await getTransactionById(id);
-        setTransaction(res);
+        setTransaction(res?.result);
       } catch (err) {
         console.error(err);
       } finally {
@@ -69,7 +69,7 @@ export default function TransactionsDetails() {
                     : "bg-red-100 text-red-600"
               }`}
             >
-              {transaction.status.toUpperCase()}
+              {transaction?.status?.toUpperCase()}
             </span>
           </div>
 
@@ -91,24 +91,24 @@ export default function TransactionsDetails() {
           <div className="space-y-3 rounded-xl border p-4">
             <div className="flex justify-between">
               <span>Price</span>
-              <span>${transaction.price}</span>
+              <span>${transaction.amount}</span>
             </div>
 
             <div className="flex justify-between text-red-500">
               <span>Discount</span>
-              <span>-${transaction.discount}</span>
+              <span>-${transaction?.package?.discount}</span>
             </div>
 
             <div className="flex justify-between border-t pt-3 text-lg font-semibold">
               <span>Total</span>
-              <span>${transaction.total}</span>
+              <span>${transaction.amount}</span>
             </div>
           </div>
 
           {/* Meta info */}
           <div className="space-y-1 text-sm text-gray-500">
-            <div>Transaction ID: {transaction.id}</div>
-            <div>User ID: {transaction.user_id}</div>
+            <div>Transaction ID: {transaction.transaction_id}</div>
+            {/* <div>User ID: {transaction.user_id}</div> */}
             <div>Currency: {transaction.currency}</div>
           </div>
         </div>

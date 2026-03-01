@@ -148,7 +148,7 @@ export function TransactionComponent() {
                   </TableCell>
                   <TableCell className="flex items-center justify-end gap-2 pr-6 text-right">
                     <button
-                      onClick={() => router.push(`/transactions/${tx?._id}`)}
+                      onClick={() => router.push(`/transactions/${tx?.id}`)}
                       className="inline-flex items-center gap-2 rounded-lg border border-primary/30 px-3 py-2 text-sm font-medium text-primary transition hover:bg-primary/80 hover:text-white disabled:opacity-50"
                     >
                       <Eye size={16} />

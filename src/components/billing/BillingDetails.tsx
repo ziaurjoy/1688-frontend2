@@ -106,7 +106,7 @@ export default function BillingDetails() {
                     : "bg-red-100 text-red-600"
               }`}
             >
-              {invoice.status.toUpperCase()}
+              {invoice?.invoice?.status.toUpperCase()}
             </span>
           </div>
 
@@ -128,25 +128,25 @@ export default function BillingDetails() {
           <div className="space-y-3 rounded-xl border p-4">
             <div className="flex justify-between">
               <span>Price</span>
-              <span>${invoice.price}</span>
+              <span>${invoice?.invoice.price}</span>
             </div>
 
             <div className="flex justify-between text-red-500">
               <span>Discount</span>
-              <span>-${invoice.discount}</span>
+              <span>-${invoice?.invoice.discount}</span>
             </div>
 
             <div className="flex justify-between border-t pt-3 text-lg font-semibold">
               <span>Total</span>
-              <span>${invoice.total}</span>
+              <span>${invoice?.invoice.total}</span>
             </div>
           </div>
 
           {/* Meta info */}
           <div className="space-y-1 text-sm text-gray-500">
-            <div>Invoice ID: {invoice.id}</div>
-            <div>User ID: {invoice.user_id}</div>
-            <div>Currency: {invoice.currency}</div>
+            <div>Invoice ID: {invoice?.invoice._id}</div>
+            <div>User: {invoice?.user?.full_name}</div>
+            <div>Currency: {invoice?.invoice.currency}</div>
           </div>
         </div>
       </div>
