@@ -41,11 +41,13 @@ export async function getInvoiceData(query: object) {
     });
 }
 
-export const getInvoiceById = async (id: string) => {
-  const res = await fetch(`/api/invoices/${id}`);
-  if (!res.ok) throw new Error("Failed to fetch invoice");
-  return res.json();
-};
+export async function getInvoiceById(id: string) {
+  return await authApi
+    .get(apiUrl + apiEndpoint.subscription.invoiceById + `${id}`)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
 
 export async function downloadInvoice(id: string) {
   return await authApi
