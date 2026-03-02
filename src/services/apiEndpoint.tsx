@@ -8,6 +8,10 @@ export const apiEndpoint = {
     package: "/users/packages/",
     edit_profile: "/users/profile/edit/",
     edit_profile_picture: "/users/profile/picture/edit/",
+    forget_password: "/users/send-otp/",
+    otp_verify: "/users/otp-verify/",
+    reset_password: "/users/reset-password/",
+    user_register: "/users/registration/",
   },
   subscription: {
     package: "/subscription/packages/",
