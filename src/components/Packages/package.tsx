@@ -183,7 +183,8 @@ export function PackagesComponent() {
             const isCurrent = userPackageId === pkg._id;
 
             let buttonLabel = "Get Started";
-            let buttonVariant: "primary" | "outlinePrimary" | "green" = "primary";
+            let buttonVariant: "primary" | "outlinePrimary" | "green" =
+              "primary";
             if (isCurrent) {
               buttonLabel = "Current Plan";
               buttonVariant = "green";

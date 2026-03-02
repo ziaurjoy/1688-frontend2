@@ -59,3 +59,35 @@ export async function getUsesData() {
       return response?.data;
     });
 }
+
+export async function forgetPassword(data: object) {
+  return await authApi
+    .post(apiUrl + apiEndpoint.user.forget_password, data)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
+
+export async function verifyOTP(data: object) {
+  return await authApi
+    .post(apiUrl + apiEndpoint.user.otp_verify, data)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
+
+export async function resetPassword(data: object) {
+  return await authApi
+    .post(apiUrl + apiEndpoint.user.reset_password, data)
+    .then((response: any) => {
+      return response?.data;
+    });
+}
+
+export async function UserRegistration(data: object) {
+  return await authApi
+    .post(apiUrl + apiEndpoint.user.user_register, data)
+    .then((response: any) => {
+      return response?.data;
+    });
+}

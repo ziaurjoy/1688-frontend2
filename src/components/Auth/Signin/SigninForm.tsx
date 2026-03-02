@@ -88,7 +88,7 @@ export default function SigninForm() {
         />
 
         <Link
-          href="/auth/forgot-password"
+          href="/forgot-password"
           className="hover:text-primary dark:text-white dark:hover:text-primary"
         >
           Forgot Password?
