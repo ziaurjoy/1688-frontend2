@@ -5,7 +5,7 @@ import { getSession, signOut } from "next-auth/react";
  * Axios instance
  */
 const authApi = axios.create({
-  baseURL: process.env.BACKEND_API_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_API_URL,
 });
 
 /**
