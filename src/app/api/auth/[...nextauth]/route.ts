@@ -64,10 +64,13 @@ export const authOptions: NextAuthOptions = {
         formData.append("username", credentials.email);
         formData.append("password", credentials.password);
 
-        const res = await fetch(`${process.env.BACKEND_API_URL}/users/token`, {
-          method: "POST",
-          body: formData,
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/users/token`,
+          {
+            method: "POST",
+            body: formData,
+          },
+        );
 
         if (!res.ok) return null;
 
@@ -103,13 +106,16 @@ export const authOptions: NextAuthOptions = {
 
       // Google login → exchange id_token with backend
       if (account?.provider === "google") {
-        const res = await fetch(`${process.env.BACKEND_API_URL}/auth/google`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id_token: account.id_token,
-          }),
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/auth/google`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id_token: account.id_token,
+            }),
+          },
+        );
 
         const data = await res.json();
 
