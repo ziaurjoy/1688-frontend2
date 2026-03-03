@@ -100,9 +100,9 @@ export function PricingSection() {
 
                 <Button
                   label="Get Started"
-                  className={`w-full font-medium transition-all duration-300 ${
+                  className={`w-full rounded-lg font-medium transition-all duration-300 ${
                     plan.highlighted
-                      ? "bg-white text-blue-600 hover:bg-gray-50"
+                      ? "bg-white !text-blue-600 hover:bg-gray-50"
                       : "bg-blue-600 text-white hover:bg-blue-700"
                   }`}
                 ></Button>
