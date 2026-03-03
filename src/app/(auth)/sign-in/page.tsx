@@ -3,12 +3,16 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export const metadata: Metadata = {
   title: "Sign in",
 };
 
-export default function SignIn() {
+export default async function SignIn() {
+  const session = await getServerSession(authOptions);
+  console.log("Session in generateMetadata:", session);
   return (
     <div className="min-h-screen w-screen">
       <div className="flex h-screen items-center justify-center rounded-[10px] bg-white shadow-1 dark:bg-gray-dark dark:shadow-card">
