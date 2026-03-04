@@ -10,7 +10,6 @@ type PropsType = {
 };
 
 export function OverviewCard({ label, data, Icon }: PropsType) {
-  console.log("Data in OverviewCard:", data);
   return (
     <div className="rounded-[10px] bg-white p-6 shadow-1 dark:bg-gray-dark">
       <Icon />
